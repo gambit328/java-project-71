@@ -5,6 +5,9 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 @Command(
         name = "gendiff",
         description = "Compares two configuration files and shows a difference.",
@@ -14,7 +17,7 @@ import picocli.CommandLine.Parameters;
 public class App implements Runnable {
 
     @Option(
-            names = { "-f", "--file" },
+            names = { "-f", "--format" },
             paramLabel = "format",
             defaultValue = "stylish",
             description = "output format [default: stylish]"
@@ -26,21 +29,28 @@ public class App implements Runnable {
             paramLabel = "filepath1",
             description = "path to first file"
     )
-    private String filepath1;
+    private Path filepath1;
 
     @Parameters(
             index = "1",
             paramLabel = "filepath2",
             description = "path to second file"
     )
-    private String filepath2;
+    private Path filepath2;
 
     @Override
     public void run() {
         System.out.println("Hello, World!");
+
+        try {
+            var result = FileUtils.readJson(filepath1);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
         new CommandLine(new App()).execute(args);
+
     }
 }

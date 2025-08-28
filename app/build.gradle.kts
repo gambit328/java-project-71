@@ -29,6 +29,11 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.18.0")
     implementation("org.apache.commons:commons-collections4:4.5.0")
     implementation("info.picocli:picocli:4.7.7")
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0-rc1")
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    implementation("com.fasterxml.jackson.core:jackson-core:2.20.0-rc1")
+
 }
 
 sonar {
