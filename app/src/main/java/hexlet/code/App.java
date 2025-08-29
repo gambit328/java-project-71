@@ -7,6 +7,7 @@ import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.concurrent.Callable;
 
 @Command(
         name = "gendiff",
@@ -14,7 +15,7 @@ import java.nio.file.Path;
         mixinStandardHelpOptions = true
 )
 
-public class App implements Runnable {
+public class App implements Callable<Integer> {
 
     @Option(
             names = { "-f", "--format" },
@@ -22,7 +23,7 @@ public class App implements Runnable {
             defaultValue = "stylish",
             description = "output format [default: stylish]"
     )
-    private String file;
+    private String format;
 
     @Parameters(
             index = "0",
@@ -39,18 +40,23 @@ public class App implements Runnable {
     private Path filepath2;
 
     @Override
-    public void run() {
-        System.out.println("Hello, World!");
-
+    public Integer call() {
+        var result = "";
         try {
-            var result = FileUtils.readJson(filepath1);
+            var resultPath1 = FileUtils.readJson(filepath1);
+            var resultPath2 = FileUtils.readJson(filepath2);
+            result += Diff.generate(resultPath1, resultPath2);
+
+            System.out.println(result);
+            return 0;
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            return 1;
         }
     }
 
     public static void main(String[] args) {
-        new CommandLine(new App()).execute(args);
-
+        int code = new CommandLine(new App()).execute(args);
+        System.exit(code);
     }
 }
