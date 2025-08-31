@@ -18,6 +18,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Grant executable gradlew
+        run: chmod +x gradlew
+
       - name: Gradle build
         run: ./gradlew build
 
