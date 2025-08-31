@@ -8,7 +8,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.52.0"
     id("io.freefair.lombok") version "8.14.2"
     id("org.sonarqube") version "6.3.1.5724"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "9.1.0"
 }
 
 group = "hexlet.code"
@@ -30,9 +30,9 @@ dependencies {
     implementation("org.apache.commons:commons-collections4:4.5.0")
     implementation("info.picocli:picocli:4.7.7")
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0-rc1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-    implementation("com.fasterxml.jackson.core:jackson-core:2.20.0-rc1")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.20.0")
 
 }
 
