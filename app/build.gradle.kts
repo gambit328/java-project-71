@@ -39,7 +39,7 @@ dependencies {
 sonar {
     properties {
         property("sonar.projectKey", "gambit328_java-project-71")
-        property("sonar.projectName", "gambit328-1")
+        property("sonar.organization", "gambit328-1")
     }
 }
 
