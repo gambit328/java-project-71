@@ -18,13 +18,13 @@ public final class FileUtils {
     private static Path getPath(final Path filePath) {
         Path resultPath = filePath.isAbsolute()
             ? filePath : FIXTURES.resolve(filePath);
-            return resultPath.toAbsolutePath().normalize();
+        return resultPath.toAbsolutePath().normalize();
     }
 
     public static Map<String, Object> readJson(final Path filePath)
         throws IOException {
-            var normalizePath = filePath.isAbsolute()
-            ? filePath.normalize() : getPath(filePath);
+        var normalizePath = filePath.isAbsolute()
+                ? filePath.normalize() : getPath(filePath);
 
         return MAPPER.readValue(
             normalizePath.toFile(),
