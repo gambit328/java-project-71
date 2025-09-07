@@ -27,8 +27,8 @@ public final class AppTest {
     void testCallsuccess() {
         var expected = 0;
         var actual = new CommandLine(new App())
-        .setOut(new PrintWriter(out, true))
-        .execute("file1.json", "file2.json");
+                .setOut(new PrintWriter(out, true))
+                .execute("file1.json", "file2.json");
 
         assertFalse(out.toString().isBlank());
         assertEquals(expected, actual);
@@ -38,8 +38,8 @@ public final class AppTest {
     void testCallFail() {
         var expected = 1;
         var actual = new CommandLine(new App())
-        .setOut(new PrintWriter(out, true))
-        .execute("file3.json", "file2.json");
+                .setOut(new PrintWriter(out, true))
+                .execute("file3.json", "file2.json");
 
         assertTrue(out.toString().isBlank());
         assertEquals(expected, actual);
