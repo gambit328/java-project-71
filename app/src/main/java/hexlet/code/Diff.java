@@ -45,6 +45,8 @@ public final class Diff {
                                  key, val2);
                         }
                     }
+
+                    return tmpResult;
                 })
                 .collect(Collectors.joining(NL, "{" + NL,
                         NL + "}"));
