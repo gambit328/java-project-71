@@ -59,4 +59,8 @@ tasks.jacocoTestReport {
         xml.required.set(true)
         html.required.set(true)
     }
+    doLast {
+        val jacocoReportHtml = reports.html.outputLocation.get().asFile.resolve("index.html").toURI()
+        println("JaCoCo HTML: $jacocoReportHtml")
+    }
 }
