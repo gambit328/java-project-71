@@ -6,11 +6,9 @@ import java.util.stream.Collectors;
 
 public final class Diff {
 
-    private static final String NL;
+    private static final String NL = System.lineSeparator();
 
-    private Diff() {
-        NL = System.lineSeparator();
-    }
+    private Diff() { }
 
     public static String generate(final Map<String, Object> content1,
             final Map<String, Object> content2) {

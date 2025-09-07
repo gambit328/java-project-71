@@ -8,19 +8,26 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-public class FileUtils {
+public final class FileUtils {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final Path FIXTURES = Path.of("src/test/resources/fixtures");
 
-    private static Path getPath(Path filePath) {
-        Path resultPath = filePath.isAbsolute() ? filePath : FIXTURES.resolve(filePath);
+    private FileUtils() { }
+
+    private static Path getPath(final Path filePath) {
+        Path resultPath = filePath.isAbsolute()
+        ? filePath : FIXTURES.resolve(filePath);
         return resultPath.toAbsolutePath().normalize();
     }
 
-    public static Map<String, Object> readJson(Path filePath) throws IOException {
-        var normalizePath = filePath.isAbsolute() ? filePath.normalize() : getPath(filePath);
+    public static Map<String, Object> readJson(final Path filePath)
+    throws IOException {
+        var normalizePath = filePath.isAbsolute()
+        ? filePath.normalize() : getPath(filePath);
 
-        return MAPPER.readValue(normalizePath.toFile(), new TypeReference<Map<String, Object>>() { });
+        return MAPPER.readValue(
+            normalizePath.toFile(),
+            new TypeReference<Map<String, Object>>() { });
     }
 }
