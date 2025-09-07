@@ -4,15 +4,21 @@ import java.util.Map;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-public class Diff {
+public final class Diff {
 
-    public static String generate(Map<String, Object> content1,
-                                  Map<String, Object> content2) {
+    private static final String NL;
+
+    private Diff() {
+        NL = System.lineSeparator();
+    }
+
+    public static String generate(final Map<String, Object> content1,
+            final Map<String, Object> content2) {
         var keys = new TreeSet<String>();
         keys.addAll(content1.keySet());
         keys.addAll(content2.keySet());
 
-        String result = keys.stream()
+        return keys.stream()
                 .map(key -> {
                     var inContent1 = content1.containsKey(key);
                     var inContent2 = content2.containsKey(key);
@@ -22,21 +28,27 @@ public class Diff {
 
                     if (inContent1 && inContent2) {
                         if (val1.equals(val2)) {
-                            tmpResult += String.format("    %s: %s", key, val1);
+                            tmpResult += String.format(
+                                "    %s: %s",
+                                 key, val1);
                         } else {
-                            tmpResult += String.format("  - %s: %s\n  + %s: %s", key, val1, key, val2);
+                            tmpResult += String.format(
+                                "  - %s: %s%n  + %s: %s",
+                                 key, val1, key, val2);
                         }
                     } else {
                         if (inContent1 && !inContent2) {
-                            tmpResult += String.format("  - %s: %s", key, val1);
+                            tmpResult += String.format(
+                                "  - %s: %s",
+                                 key, val1);
                         } else if (!inContent1 && inContent2) {
-                            tmpResult += String.format("  + %s: %s", key, val2);
+                            tmpResult += String.format(
+                                "  + %s: %s",
+                                 key, val2);
                         }
                     }
-                    return tmpResult;
                 })
-                .collect(Collectors.joining("\n", "{\n", "\n}"));
-
-        return result;
+                .collect(Collectors.joining(NL, "{" + NL,
+                        NL + "}"));
     }
 }
