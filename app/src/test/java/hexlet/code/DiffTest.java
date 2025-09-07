@@ -9,15 +9,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class DiffTest {
+final class DiffTest {
 
     @ParameterizedTest(name = "{3}")
     @MethodSource("cases")
     void testGenerate(
-            String expected,
-            Map<String, Object> content1,
-            Map<String, Object> content2,
-            String testName) {
+            final String expected,
+            final Map<String, Object> content1,
+            final Map<String, Object> content2,
+            final String testName) {
         var actual = Diff.generate(content1, content2);
         assertEquals(expected.stripTrailing(), actual.stripTrailing());
     }
@@ -36,15 +36,13 @@ public class DiffTest {
                         }
                         """,
                         Map.of(
-                                "follow",
-                                false,
-                                "host",
-                                "hexlet.io",
-                                "proxy",
-                                "123.234.53.22",
-                                "timeout",
-                                50),
-                        Map.of("timeout", 20, "verbose", true, "host", "hexlet.io"),
+                                "follow", false,
+                                "host", "hexlet.io",
+                                "proxy", "123.234.53.22",
+                                "timeout", 50),
+                        Map.of("timeout", 20,
+                                "verbose", true,
+                                "host", "hexlet.io"),
                         "basic"),
                 Arguments.of("{\n\n}", Map.of(), Map.of(), "empty"),
                 Arguments.of(
@@ -58,16 +56,11 @@ public class DiffTest {
                         }
                         """,
                         Map.of(
-                                "follow",
-                                false,
-                                "host",
-                                "hexlet.io",
-                                "proxy",
-                                "123.234.53.22",
-                                "timeout",
-                                50,
-                                "verbose",
-                                true),
+                                "follow", false,
+                                "host", "hexlet.io",
+                                "proxy", "123.234.53.22",
+                                "timeout", 50,
+                                "verbose", true),
                         Map.of(),
                         "second map is empty"),
                 Arguments.of(
@@ -82,16 +75,11 @@ public class DiffTest {
                         """,
                         Map.of(),
                         Map.of(
-                                "follow",
-                                false,
-                                "host",
-                                "hexlet.io",
-                                "proxy",
-                                "123.234.53.22",
-                                "timeout",
-                                50,
-                                "verbose",
-                                true),
+                                "follow", false,
+                                "host", "hexlet.io",
+                                "proxy", "123.234.53.22",
+                                "timeout", 50,
+                                "verbose", true),
                         "first map is empty"));
     }
 }

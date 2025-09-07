@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
 
-public class FileUtilsTest {
+final class FileUtilsTest {
 
     private static Path file1;
     private static Path file2;
@@ -25,7 +25,7 @@ public class FileUtilsTest {
     }
 
     @Test
-    public void testReadJson() throws IOException {
+    void testReadJson() throws IOException {
         var expected = Map.of("host", "hexlet.io",
                 "timeout", 50,
                 "proxy", "123.234.53.22",
@@ -35,7 +35,7 @@ public class FileUtilsTest {
     }
 
     @Test
-    public void testReadJsonabsolutePath() throws IOException {
+    void testReadJsonabsolutePath() throws IOException {
         var expected = Map.of("timeout", 20,
                 "verbose", true,
                 "host", "hexlet.io");
@@ -44,7 +44,7 @@ public class FileUtilsTest {
     }
 
     @Test
-    public void testReadJsonfileNoExist() throws IOException {
+    void testReadJsonfileNoExist() {
         assertThrows(
                 IOException.class,
                 () -> {

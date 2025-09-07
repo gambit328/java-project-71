@@ -12,15 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import picocli.CommandLine;
 
-public final class AppTest {
+final class AppTest {
 
     private StringWriter out;
-    private StringWriter err;
 
     @BeforeEach
     void beforeEach() {
         out = new StringWriter();
-        err = new StringWriter();
     }
 
     @Test
