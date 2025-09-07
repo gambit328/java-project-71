@@ -5,10 +5,10 @@ plugins {
     application
     jacoco
     checkstyle
-    id("com.github.ben-manes.versions") version "0.52.0"
-    id("io.freefair.lombok") version "8.14.2"
-    id("org.sonarqube") version "6.3.1.5724"
-    id("com.gradleup.shadow") version "9.1.0"
+    alias(libs.plugins.lombok)
+    alias(libs.plugins.versions)
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.sonarqube)
 }
 
 group = "hexlet.code"
@@ -23,19 +23,20 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params
-    testImplementation("org.junit.jupiter:junit-jupiter-params:6.0.0-RC2")
-    implementation("org.apache.commons:commons-lang3:3.18.0")
-    implementation("org.apache.commons:commons-collections4:4.5.0")
-    implementation("info.picocli:picocli:4.7.7")
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-    implementation("com.fasterxml.jackson.core:jackson-core:2.20.0")
+    testImplementation(libs.junit.jupiter.params)
 
+    implementation(libs.commons.lang3)
+    implementation(libs.commons.collections4)
+    implementation(libs.picocli)
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation(libs.jackson.databind)
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    implementation(libs.jackson.core)
+
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 sonar {
