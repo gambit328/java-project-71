@@ -15,13 +15,23 @@ public final class FileUtils {
 
     private FileUtils() { }
 
-    private static Path getPath(final Path filePath) {
+    private static Path getPath(Path filePath) {
         Path resultPath = filePath.isAbsolute()
             ? filePath : FIXTURES.resolve(filePath);
         return resultPath.toAbsolutePath().normalize();
     }
 
-    public static Map<String, Object> readJson(final Path filePath)
+    public static Map<String, Object> readJson(Path filePath)
+        throws IOException {
+        var normalizePath = filePath.isAbsolute()
+                ? filePath.normalize() : getPath(filePath);
+
+        return MAPPER.readValue(
+            normalizePath.toFile(),
+            new TypeReference<Map<String, Object>>() { });
+    }
+
+    public static Map<String, Object> readYaml(Path filePath)
         throws IOException {
         var normalizePath = filePath.isAbsolute()
                 ? filePath.normalize() : getPath(filePath);

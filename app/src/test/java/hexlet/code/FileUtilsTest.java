@@ -12,16 +12,25 @@ import java.util.Map;
 
 final class FileUtilsTest {
 
-    private static Path file1;
-    private static Path file2;
-    private static Path file3;
+    private static Path fileJson1;
+    private static Path fileJson2;
+    private static Path fileJson3;
+
+    private static Path fileYaml1;
+    private static Path fileYaml2;
+    private static Path fileYaml3;
 
     @BeforeAll
     static void beforeAll() {
-        file1 = Path.of("file1.json");
-        file2 = Path.of("src", "test", "resources",
+        fileJson1 = Path.of("file1.json");
+        fileJson2 = Path.of("src", "test", "resources",
                 "fixtures", "file2.json").toAbsolutePath();
-        file3 = Path.of("file3.json");
+        fileJson3 = Path.of("file3.json");
+
+        fileYaml1 = Path.of("file1.yaml");
+        fileYaml2 = Path.of("src", "test", "resources",
+                "fixtures", "file2.yaml").toAbsolutePath();
+        fileYaml3 = Path.of("file3.yaml");
     }
 
     @Test
@@ -30,25 +39,53 @@ final class FileUtilsTest {
                 "timeout", 50,
                 "proxy", "123.234.53.22",
                 "follow", false);
-        var actual = FileUtils.readJson(file1);
+        var actual = FileUtils.readJson(fileJson1);
         assertEquals(expected, actual);
     }
 
     @Test
-    void testReadJsonabsolutePath() throws IOException {
+    void testReadJsonAbsolutePath() throws IOException {
         var expected = Map.of("timeout", 20,
                 "verbose", true,
                 "host", "hexlet.io");
-        var actual = FileUtils.readJson(file2);
+        var actual = FileUtils.readJson(fileJson2);
         assertEquals(expected, actual);
     }
 
     @Test
-    void testReadJsonfileNoExist() {
+    void testReadJsonFileNoExist() {
         assertThrows(
                 IOException.class,
                 () -> {
-                    FileUtils.readJson(file3);
+                    FileUtils.readJson(fileJson3);
+                });
+    }
+
+    @Test
+    void testReadYaml() throws IOException {
+        var expected = Map.of("host", "hexlet.io",
+                "timeout", 50,
+                "proxy", "123.234.53.22",
+                "follow", false);
+        var actual = FileUtils.readYaml(fileYaml1);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testReadYamlAbsolutePath() throws IOException {
+        var expected = Map.of("timeout", 20,
+                "verbose", true,
+                "host", "hexlet.io");
+        var actual = FileUtils.readYaml(fileYaml2);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testReadYamlFileNoExist() {
+        assertThrows(
+                IOException.class,
+                () -> {
+                    FileUtils.readYaml(fileYaml3);
                 });
     }
 }
