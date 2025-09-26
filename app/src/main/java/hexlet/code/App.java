@@ -7,7 +7,6 @@ import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Spec;
 import picocli.CommandLine.Model.CommandSpec;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
@@ -46,19 +45,10 @@ public final class App implements Callable<Integer> {
     private Path filepath2;
 
     @Override
-    public Integer call() {
-        var result = "";
-        try {
-            var resultPath1 = FileUtils.readJson(filepath1);
-            var resultPath2 = FileUtils.readJson(filepath2);
-            result += Diff.generate(resultPath1, resultPath2);
-
-            spec.commandLine().getOut().println(result);
-            return 0;
-        } catch (IOException e) {
-            spec.commandLine().getErr().println(e.getMessage());
-            return 1;
-        }
+    public Integer call() throws Exception {
+        var result = Diff.generate(filepath1, filepath2);
+        System.out.println(result);
+        return 0;
     }
 
     public static void main(final String[] args) {
