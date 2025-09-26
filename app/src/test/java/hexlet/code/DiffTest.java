@@ -2,84 +2,42 @@ package hexlet.code;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Map;
-import java.util.stream.Stream;
 
-final class DiffTest {
+public class DiffTest {
 
-    @ParameterizedTest(name = "{3}")
-    @MethodSource("cases")
-    void testGenerate(
-            final String expected,
-            final Map<String, Object> content1,
-            final Map<String, Object> content2,
-            final String testName) {
-        var actual = Diff.generate(content1, content2);
-        assertEquals(expected.stripTrailing(), actual.stripTrailing());
+    private static String expectedJson;
+
+    public static Path getAbsPath(String fileName) {
+        return Paths.get("src/test/resources/fixtures", fileName)
+            .toAbsolutePath().normalize();
     }
 
-    static Stream<Arguments> cases() {
-        return Stream.of(
-                Arguments.of(
-                        """
-                        {
-                          - follow: false
-                            host: hexlet.io
-                          - proxy: 123.234.53.22
-                          - timeout: 50
-                          + timeout: 20
-                          + verbose: true
-                        }
-                        """,
-                        Map.of(
-                                "follow", false,
-                                "host", "hexlet.io",
-                                "proxy", "123.234.53.22",
-                                "timeout", 50),
-                        Map.of("timeout", 20,
-                                "verbose", true,
-                                "host", "hexlet.io"),
-                        "basic"),
-                Arguments.of("{\n\n}", Map.of(), Map.of(), "empty"),
-                Arguments.of(
-                        """
-                        {
-                          - follow: false
-                          - host: hexlet.io
-                          - proxy: 123.234.53.22
-                          - timeout: 50
-                          - verbose: true
-                        }
-                        """,
-                        Map.of(
-                                "follow", false,
-                                "host", "hexlet.io",
-                                "proxy", "123.234.53.22",
-                                "timeout", 50,
-                                "verbose", true),
-                        Map.of(),
-                        "second map is empty"),
-                Arguments.of(
-                        """
-                        {
-                          + follow: false
-                          + host: hexlet.io
-                          + proxy: 123.234.53.22
-                          + timeout: 50
-                          + verbose: true
-                        }
-                        """,
-                        Map.of(),
-                        Map.of(
-                                "follow", false,
-                                "host", "hexlet.io",
-                                "proxy", "123.234.53.22",
-                                "timeout", 50,
-                                "verbose", true),
-                        "first map is empty"));
+    public static String readFile(String fileName) throws IOException {
+        Path filePath = getAbsPath(fileName);
+        return Files.readString(filePath).trim();
+    }
+
+    @BeforeAll
+    public static void setup() throws IOException {
+        expectedJson = readFile("expected/file.json");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yaml"})
+    public void testGenerateDefaultOutput(String inputFormat) throws Exception {
+        var file1 = getAbsPath("input_files/file1." + inputFormat);
+        var file2 = getAbsPath("input_files/file2." + inputFormat);
+
+        String actual = Diff.generate(file1, file2);
+        assertEquals(expectedJson, actual);
     }
 }
