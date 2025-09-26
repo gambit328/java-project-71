@@ -4,3 +4,5 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gambit328_java-project-71&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gambit328_java-project-71)
 
 <a href="https://asciinema.org/a/lHWAOmJTzrFyU1zKo1YHtVVfr" target="_blank"><img src="https://asciinema.org/a/lHWAOmJTzrFyU1zKo1YHtVVfr.svg" /></a>
+
+<a href="https://asciinema.org/a/eu6ts7dDIkjycuNrvASagLvLW" target="_blank"><img src="https://asciinema.org/a/eu6ts7dDIkjycuNrvASagLvLW.svg" /></a>
