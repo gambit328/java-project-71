@@ -2,6 +2,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
+    java
     application
     jacoco
     checkstyle
@@ -15,7 +16,7 @@ group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
 application {
-    mainClass = "hexlet.code.App"
+    mainClass.set("hexlet.code.App")
 }
 
 repositories {
@@ -35,6 +36,8 @@ dependencies {
     implementation(libs.jackson.databind)
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     implementation(libs.jackson.core)
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.20.0")
 
     testRuntimeOnly(libs.junit.platform.launcher)
 }
