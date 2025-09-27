@@ -6,7 +6,7 @@ import hexlet.code.common.FileData;
 
 public final class StylishFormatter {
 
-    private StylishFormatter () { }
+    private StylishFormatter() { }
 
     public static String formatString(List<FileData> diff)
         throws Exception {
