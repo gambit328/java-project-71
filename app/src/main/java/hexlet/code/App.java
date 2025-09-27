@@ -46,7 +46,7 @@ public final class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        var result = Diff.generate(filepath1, filepath2);
+        var result = Diff.generate(filepath1, filepath2, format);
         System.out.println(result);
         return 0;
     }

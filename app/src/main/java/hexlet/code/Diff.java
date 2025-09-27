@@ -7,7 +7,8 @@ public final class Diff {
 
     private Diff() { }
 
-    public static String generate(Path filepath1, Path filepath2) throws Exception {
+    public static String generate(Path filepath1, Path filepath2, String format)
+        throws Exception {
         var filecontent1 = Parser.readFile(filepath1);
         var filecontent2 = Parser.readFile(filepath2);
 
