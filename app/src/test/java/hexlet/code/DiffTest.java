@@ -45,11 +45,22 @@ public class DiffTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"json", "yaml"})
-    public void testGenerateDefaultOutput1(String inputFormat) throws Exception {
-        var file1 = getAbsPath("input_files/file3." + inputFormat);
-        var file2 = getAbsPath("input_files/file4." + inputFormat);
+    public void testGenerateDefaultOutput1AbsPath(String inputFormat)
+        throws Exception {
+        var file3 = getAbsPath("input_files/file3." + inputFormat);
+        var file4 = getAbsPath("input_files/file4." + inputFormat);
 
-        String actual = Diff.generate(file1, file2);
+        String actual = Diff.generate(file3, file4);
+        assertEquals(expectedJson1, actual);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yaml"})
+    public void testGenerateDefaultOutput1(String inputFormat) throws Exception {
+        Path file3 = Path.of("file3." + inputFormat);
+        Path file4 = Path.of("file4." + inputFormat);
+
+        String actual = Diff.generate(file3, file4);
         assertEquals(expectedJson1, actual);
     }
 }
