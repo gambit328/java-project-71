@@ -11,6 +11,7 @@ public final class Formatter {
         throws Exception {
         return switch (formatteString) {
             case "stylish" -> StylishFormatter.formatString(diff);
+            case "plain" -> PlainFormatter.formatString(diff);
             default -> throw new UnsupportedOperationException(
                 "Unknown format: " + formatteString
             );
