@@ -16,6 +16,7 @@ public class DiffTest {
 
     private static String expectedJson;
     private static String expectedJson1;
+    private static String expectedPlain;
 
     public static Path getAbsPath(String fileName) {
         return Paths.get("src/test/resources/fixtures", fileName)
@@ -31,6 +32,7 @@ public class DiffTest {
     public static void setup() throws IOException {
         expectedJson = readFile("expected/file.json");
         expectedJson1 = readFile("expected/file1.json");
+        expectedPlain = readFile("expected/plain.txt");
     }
 
     @ParameterizedTest
@@ -45,10 +47,9 @@ public class DiffTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"json", "yaml"})
-    public void testGenerateDefaultOutput1AbsPath(String inputFormat)
-        throws Exception {
-        var file3 = getAbsPath("input_files/file3." + inputFormat);
-        var file4 = getAbsPath("input_files/file4." + inputFormat);
+    public void testGenerateDefaultOutput1(String inputFormat) throws Exception {
+        Path file3 = getAbsPath("input_files/file3." + inputFormat);
+        Path file4 = Path.of("file4." + inputFormat);
 
         String actual = Diff.generate(file3, file4);
         assertEquals(expectedJson1, actual);
@@ -56,11 +57,12 @@ public class DiffTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"json", "yaml"})
-    public void testGenerateDefaultOutput1(String inputFormat) throws Exception {
-        Path file3 = Path.of("file3." + inputFormat);
-        Path file4 = Path.of("file4." + inputFormat);
+    public void testGenerateWithPlainOutput(String inputFormat)
+        throws Exception {
+        var file3 = getAbsPath("input_files/file3." + inputFormat);
+        var file4 = getAbsPath("input_files/file4." + inputFormat);
 
-        String actual = Diff.generate(file3, file4);
-        assertEquals(expectedJson1, actual);
+        String actual = Diff.generate(file3, file4, "plain");
+        assertEquals(expectedPlain, actual);
     }
 }
