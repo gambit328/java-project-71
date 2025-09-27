@@ -55,8 +55,7 @@ public final class Parser {
     }
 
     private static Path getPath(Path filePath) {
-        Path resultPath = filePath.isAbsolute()
-            ? filePath : FIXTURES.resolve(filePath);
+        Path resultPath = FIXTURES.resolve(filePath);
         return resultPath.toAbsolutePath().normalize();
     }
 }
