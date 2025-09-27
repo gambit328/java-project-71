@@ -23,22 +23,20 @@ public final class ComparatorFiles {
         keys.addAll(content2.keySet());
 
         for (var key: keys) {
-            var val1 = content1.get(key);
-            var val2 = content2.get(key);
-            if (!Objects.equals(val1, val2)) {
-                if (Objects.isNull(val2)) {
-                    result.add(new FileData(key, Status.REMOVED,
-                        val1, val2));
-                } else if (Objects.isNull(val1)) {
-                    result.add(new FileData(key, Status.ADDED,
-                        val1, val2));
-                } else {
-                    result.add(new FileData(key, Status.CHANGED,
-                        val1, val2));
-                }
-            } else {
+            var oldVal = content1.get(key);
+            var newVal = content2.get(key);
+            if (!content2.containsKey(key)) {
+                result.add(new FileData(key, Status.REMOVED,
+                    oldVal, newVal));
+            } else if (!content1.containsKey(key)) {
+                result.add(new FileData(key, Status.ADDED,
+                    oldVal, newVal));
+            } else if (Objects.equals(oldVal, newVal)) {
                 result.add(new FileData(key, Status.UNCHANGED,
-                    val1, val2));
+                    oldVal, newVal));
+            } else if (!Objects.equals(oldVal, newVal)) {
+                result.add(new FileData(key, Status.CHANGED,
+                    oldVal, newVal));
             }
         }
 
