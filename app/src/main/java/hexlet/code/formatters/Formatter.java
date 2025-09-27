@@ -10,7 +10,7 @@ public final class Formatter {
     public static String formatString(List<FileData> diff, String formatteString)
         throws Exception {
         return switch (formatteString) {
-            case "json" -> JsonFormatter.formatString(diff);
+            case "stylish" -> StylishFormatter.formatString(diff);
             default -> throw new UnsupportedOperationException(
                 "Unknown format: " + formatteString
             );

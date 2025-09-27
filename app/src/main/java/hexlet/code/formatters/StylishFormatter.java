@@ -4,9 +4,9 @@ import java.util.List;
 
 import hexlet.code.common.FileData;
 
-public final class JsonFormatter {
+public final class StylishFormatter {
 
-    private JsonFormatter() { }
+    private StylishFormatter () { }
 
     public static String formatString(List<FileData> diff)
         throws Exception {

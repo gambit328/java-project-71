@@ -14,6 +14,6 @@ public final class Diff {
 
         var diff = ComparatorFiles.generate(filecontent1, filecontent2);
 
-        return Formatter.formatString(diff, "json");
+        return Formatter.formatString(diff, format);
     }
 }
