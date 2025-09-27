@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class DiffTest {
 
     private static String expectedJson;
+    private static String expectedJson1;
 
     public static Path getAbsPath(String fileName) {
         return Paths.get("src/test/resources/fixtures", fileName)
@@ -29,6 +30,7 @@ public class DiffTest {
     @BeforeAll
     public static void setup() throws IOException {
         expectedJson = readFile("expected/file.json");
+        expectedJson1 = readFile("expected/file1.json");
     }
 
     @ParameterizedTest
@@ -39,5 +41,15 @@ public class DiffTest {
 
         String actual = Diff.generate(file1, file2);
         assertEquals(expectedJson, actual);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yaml"})
+    public void testGenerateDefaultOutput1(String inputFormat) throws Exception {
+        var file1 = getAbsPath("input_files/file3." + inputFormat);
+        var file2 = getAbsPath("input_files/file4." + inputFormat);
+
+        String actual = Diff.generate(file1, file2);
+        assertEquals(expectedJson1, actual);
     }
 }
