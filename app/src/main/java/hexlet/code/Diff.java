@@ -16,4 +16,9 @@ public final class Diff {
 
         return Formatter.formatString(diff, format);
     }
+
+    public static String generate(Path filepath1, Path filepath2)
+        throws Exception {
+        return generate(filepath1, filepath2, "stylish");
+    }
 }
