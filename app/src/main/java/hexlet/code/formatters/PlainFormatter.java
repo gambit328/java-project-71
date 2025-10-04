@@ -4,33 +4,44 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import hexlet.code.common.FileData;
-import hexlet.code.common.Status;
+import hexlet.code.common.DiffRow;
+import hexlet.code.common.Added;
+import hexlet.code.common.Changed;
+
 
 public final class PlainFormatter {
 
     private PlainFormatter() { }
 
-    public static String formatString(List<FileData> diff)
+    public static String formatString(List<DiffRow> diff)
         throws Exception {
         StringBuilder result = new StringBuilder();
 
         for (var elem: diff) {
-            if (elem.status() == Status.UNCHANGED) {
+            if (elem.status() == DiffRow.Status.UNCHANGED) {
                 continue;
             }
 
             var key = elem.key();
-            var oldValue = normalizeValue(elem.oldVal());
-            var newValue = normalizeValue(elem.newVal());
             var part2 = switch (elem.status()) {
-                case REMOVED -> "was removed";
-                case ADDED -> String.format(
-                    "was added with value: %s", newValue
-                );
-                case CHANGED -> String.format(
-                    "was updated. From %s to %s", oldValue, newValue
-                );
+                case REMOVED -> {
+                    yield "was removed";
+                }
+                case ADDED -> {
+                    var added = (Added) elem;
+                    yield String.format(
+                        "was added with value: %s",
+                        normalizeValue(added.newValue())
+                    );
+                }
+                case CHANGED -> {
+                    var changed = (Changed) elem;
+                    yield String.format(
+                        "was updated. From %s to %s",
+                        normalizeValue(changed.oldValue()),
+                        normalizeValue(changed.newValue())
+                    );
+                }
                 default -> throw new UnsupportedOperationException(
                     "[ERROR] wrong status " + elem.status()
                 );
@@ -57,5 +68,4 @@ public final class PlainFormatter {
             }
         };
     }
-
 }
