@@ -1,4 +1,4 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+// import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
@@ -37,7 +37,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     implementation(libs.jackson.core)
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.20.0")
+    implementation(libs.jackson.dataformat.yaml)
 
     testRuntimeOnly(libs.junit.platform.launcher)
 }
@@ -52,7 +52,7 @@ sonar {
 tasks.test {
     useJUnitPlatform()
     testLogging {
-        exceptionFormat = TestExceptionFormat.FULL
+        // exceptionFormat = TestExceptionFormat.FULL
         events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
         showStandardStreams = true
     }
