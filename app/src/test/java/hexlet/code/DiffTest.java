@@ -14,13 +14,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class DiffTest {
 
-    private static String expectedJson;
-    private static String expectedJson1;
+    private static String expcetedStylish;
+    private static String expectedStylish1;
     private static String expectedPlain;
+    private static String expectedJson;
 
     public static Path getAbsPath(String fileName) {
-        return Paths.get("src/test/resources/fixtures", fileName)
-            .toAbsolutePath().normalize();
+        return Paths.get("src", "test", "resources", "fixtures",
+            fileName).toAbsolutePath().normalize();
     }
 
     public static String readFile(String fileName) throws IOException {
@@ -30,9 +31,10 @@ public class DiffTest {
 
     @BeforeAll
     public static void setup() throws IOException {
-        expectedJson = readFile("expected/file.json");
-        expectedJson1 = readFile("expected/file1.json");
+        expcetedStylish = readFile("expected/file.json");
+        expectedStylish1 = readFile("expected/file1.json");
         expectedPlain = readFile("expected/plain.txt");
+        expectedJson = readFile("expected/json.json");
     }
 
     @ParameterizedTest
@@ -42,7 +44,7 @@ public class DiffTest {
         var file2 = getAbsPath("input_files/file2." + inputFormat);
 
         String actual = Diff.generate(file1, file2);
-        assertEquals(expectedJson, actual);
+        assertEquals(expcetedStylish, actual);
     }
 
     @ParameterizedTest
@@ -52,7 +54,7 @@ public class DiffTest {
         Path file4 = Path.of("file4." + inputFormat);
 
         String actual = Diff.generate(file3, file4);
-        assertEquals(expectedJson1, actual);
+        assertEquals(expectedStylish1, actual);
     }
 
     @ParameterizedTest
@@ -64,5 +66,16 @@ public class DiffTest {
 
         String actual = Diff.generate(file3, file4, "plain");
         assertEquals(expectedPlain, actual);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yaml"})
+    public void testGenerateWithJsonOutput(String inputFormat)
+        throws Exception {
+        var file3 = getAbsPath("input_files/file3." + inputFormat);
+        var file4 = Path.of("file4." + inputFormat);
+
+        String actual = Diff.generate(file3, file4, "json");
+        assertEquals(expectedJson, actual);
     }
 }
